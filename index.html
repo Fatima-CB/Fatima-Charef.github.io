@@ -139,6 +139,50 @@
     66%       { transform: translate(calc(var(--tx, 10px) * -0.5), var(--ty2, 8px)) scale(0.9); }
   }
 
+  /* ── ÉCRAN D'ACCUEIL ── */
+  .welcome-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .welcome-screen.hide {
+    opacity: 0; pointer-events: none; transform: scale(1.03);
+  }
+  .welcome-card {
+    text-align: center;
+    animation: cardIn 0.8s ease forwards;
+  }
+  .welcome-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 600; color: var(--warm);
+    background: linear-gradient(90deg, #2C2520 0%, #2C2520 30%, #C9A96E 50%, #2C2520 70%, #2C2520 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: nameShine 3s linear infinite;
+    margin-bottom: 12px;
+  }
+  .welcome-role {
+    font-family: var(--font);
+    font-size: 12px; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--mid); margin-bottom: 48px;
+  }
+  .welcome-btn {
+    background: white; border: 1px solid rgba(44,37,32,0.12);
+    border-radius: 100px; padding: 16px 40px;
+    font-family: var(--font); font-size: 13px; font-weight: 500;
+    color: var(--warm); cursor: pointer; letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(44,37,32,0.08);
+    transition: all 0.3s ease;
+  }
+  .welcome-btn:hover {
+    background: var(--blush); border-color: var(--accent1);
+    color: var(--accent1); transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(201,104,90,0.2);
+  }
+
   /* Bouton musique */
   .music-btn {
     position: fixed; bottom: 90px; right: 80px; z-index: 200;
@@ -855,6 +899,17 @@
 </head>
 <body>
 
+<!-- Écran d'accueil -->
+<div class="welcome-screen" id="welcomeScreen">
+  <div class="welcome-card">
+    <div class="welcome-name">Fatima Charef</div>
+    <div class="welcome-role">Product Manager</div>
+    <button class="welcome-btn" id="welcomeBtn">
+      <span>✦ Découvrir mon CV</span>
+    </button>
+  </div>
+</div>
+
 <!-- Musique de fond -->
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
@@ -1281,26 +1336,24 @@
 <button class="back-to-top" id="backTop" onclick="document.getElementById('hero').scrollIntoView({behavior:'smooth'})">↑</button>
 
 <script>
-  // ── MUSIQUE DE FOND — démarre au chargement ──
+  // ── ÉCRAN D'ACCUEIL + MUSIQUE ──
   const bgMusic = document.getElementById('bgMusic');
   const musicBtn = document.getElementById('musicBtn');
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const welcomeBtn = document.getElementById('welcomeBtn');
   bgMusic.volume = 0.18;
 
-  // Tente de démarrer automatiquement
-  const tryPlay = () => {
+  welcomeBtn.addEventListener('click', () => {
+    // Démarre la musique
     bgMusic.play().then(() => {
       musicBtn.classList.add('playing');
-    }).catch(() => {
-      // Si bloqué par le navigateur, démarre au premier clic
-      document.addEventListener('click', () => {
-        bgMusic.play();
-        musicBtn.classList.add('playing');
-      }, { once: true });
-    });
-  };
-  window.addEventListener('load', tryPlay);
+    }).catch(() => {});
+    // Cache l'écran d'accueil
+    welcomeScreen.classList.add('hide');
+    setTimeout(() => welcomeScreen.style.display = 'none', 900);
+  });
 
-  // Bouton toggle
+  // Bouton toggle musique
   musicBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (bgMusic.paused) {
