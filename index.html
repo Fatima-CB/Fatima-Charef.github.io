@@ -533,21 +533,21 @@
   .reveal       { opacity: 0; }
   .reveal.in    { opacity: 1; }
 
-  /* Cards gauche — glissent depuis la gauche + fade */
+  /* Cards gauche — glissent depuis la gauche */
   .reveal-left {
     opacity: 0;
-    transform: translateX(-28px) translateY(10px);
-    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
-                transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    transform: translateX(-50px) translateY(6px);
+    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1),
+                transform 0.75s cubic-bezier(0.22,1,0.36,1);
   }
   .reveal-left.in { opacity: 1; transform: translateX(0) translateY(0); }
 
-  /* Cards droite — glissent depuis la droite + fade */
+  /* Cards droite — glissent depuis la droite */
   .reveal-right {
     opacity: 0;
-    transform: translateX(28px) translateY(10px);
-    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
-                transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    transform: translateX(50px) translateY(6px);
+    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1),
+                transform 0.75s cubic-bezier(0.22,1,0.36,1);
   }
   .reveal-right.in { opacity: 1; transform: translateX(0) translateY(0); }
 
@@ -611,6 +611,11 @@
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255,255,255,0.8); border-radius: 20px; padding: 36px 40px;
     box-shadow: 0 4px 24px rgba(44,37,32,0.05);
+    transition: box-shadow 0.5s ease, transform 0.4s ease;
+  }
+  .glass-card:hover {
+    box-shadow: 0 10px 44px rgba(201,104,90,0.1), 0 0 0 1px rgba(242,213,213,0.35), 0 2px 8px rgba(44,37,32,0.04);
+    transform: translateY(-3px);
   }
 
   /* ── SECTION TITLE ── */
@@ -837,21 +842,60 @@
     opacity: 0; animation: cardIn 0.8s 0.6s ease forwards;
     box-shadow: 0 2px 12px rgba(44,37,32,0.05);
     margin-bottom: 20px;
+    transition: box-shadow 0.5s ease;
+    position: relative;
+  }
+  .bottom-band:hover {
+    box-shadow: 0 6px 32px rgba(201,104,90,0.12), 0 0 0 1px rgba(242,213,213,0.4);
   }
 
-  .band-left { font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--warm); font-style: normal; position: relative; z-index: 1; transition: color 0.5s; }
-  .band-left span { color: #1A1410; font-style: normal; font-weight: 700; }
-  .bottom-band:hover .band-left span { color: #1A1410; }
-  .band-center { display: flex; gap: 20px; flex-wrap: wrap; position: relative; z-index: 1; }
-  .band-item { font-family: var(--font); font-size: 12px; color: var(--mid); letter-spacing: 0.5px; text-decoration: none; transition: color 0.3s; }
-  .band-item:hover { color: var(--accent1); }
+  .band-left {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; color: var(--warm);
+    position: relative; z-index: 1;
+  }
+  .band-left span { color: #1A1410; font-weight: 700; }
+
+  .band-center {
+    display: flex; gap: 12px; align-items: center;
+  }
+
+  /* Icônes de liens */
+  .band-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(44,37,32,0.05); color: var(--mid);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; border: 1px solid rgba(44,37,32,0.08);
+    transition: all 0.3s ease;
+  }
+  .band-icon:hover {
+    background: var(--blush); color: var(--accent1);
+    border-color: rgba(201,104,90,0.2);
+    transform: translateY(-3px); box-shadow: 0 6px 16px rgba(201,104,90,0.15);
+  }
+  .band-icon-li:hover {
+    background: #0A66C2; color: white;
+    border-color: #0A66C2;
+    box-shadow: 0 6px 16px rgba(10,102,194,0.25);
+  }
+
+  /* Disponible */
   .band-avail {
     display: flex; align-items: center; gap: 10px;
-    background: rgba(255,255,255,0.5); border: 1px solid rgba(44,37,32,0.15);
-    border-radius: 100px; padding: 9px 20px; font-family: var(--font); font-size: 12px;
-    color: var(--warm); letter-spacing: 0.5px; transition: all 0.5s; position: relative; z-index: 1;
+    background: rgba(255,255,255,0.5); border: 1px solid rgba(44,37,32,0.12);
+    border-radius: 100px; padding: 9px 20px;
+    font-family: var(--font); font-size: 12px;
+    color: var(--warm); letter-spacing: 0.5px;
+    transition: all 0.4s ease; cursor: default;
   }
-  .avail-light { width: 8px; height: 8px; background: #7CFC00; border-radius: 50%; animation: glow 2s ease-in-out infinite; }
+  .band-avail:hover {
+    background: var(--blush); border-color: var(--accent1);
+    color: var(--accent1); box-shadow: 0 4px 16px rgba(201,104,90,0.2);
+    transform: translateY(-2px);
+  }
+  .band-avail:hover .avail-text::after { content: ' — Ouverte aux opportunités'; font-size: 10px; }
+  .avail-light { width: 8px; height: 8px; background: #7CFC00; border-radius: 50%; animation: glow 2s ease-in-out infinite; flex-shrink: 0; }
+  .band-avail:hover .avail-light { background: var(--accent1); animation: none; }
   @keyframes glow { 0%,100%{box-shadow:0 0 0 0 rgba(124,252,0,0)} 50%{box-shadow:0 0 8px rgba(124,252,0,0.6)} }
 
   /* ══════════════════════════
@@ -1232,6 +1276,22 @@
             Tally<span class="tooltip">Création de formulaires et sondages simples</span><span class="sparkles"></span>
           </div>
           <div class="tool-tag magic-btn">
+            <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#24292e"/><text x="50" y="68" text-anchor="middle" font-size="36" font-weight="900" fill="white" font-family="sans-serif">GH</text></svg>
+            GitHub<span class="tooltip">Gestion de versions et collaboration sur le code</span><span class="sparkles"></span>
+          </div>
+          <div class="tool-tag magic-btn">
+            <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#0078D7"/><text x="50" y="68" text-anchor="middle" font-size="28" font-weight="900" fill="white" font-family="sans-serif">VS</text></svg>
+            Visual Studio<span class="tooltip">Environnement de développement et édition de code</span><span class="sparkles"></span>
+          </div>
+          <div class="tool-tag magic-btn">
+            <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#E44D26"/><text x="50" y="68" text-anchor="middle" font-size="32" font-weight="900" fill="white" font-family="sans-serif">HTML</text></svg>
+            HTML5<span class="tooltip">Structure et sémantique des pages web</span><span class="sparkles"></span>
+          </div>
+          <div class="tool-tag magic-btn">
+            <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#264DE4"/><text x="50" y="68" text-anchor="middle" font-size="36" font-weight="900" fill="white" font-family="sans-serif">CSS</text></svg>
+            CSS3<span class="tooltip">Mise en forme et design des interfaces web</span><span class="sparkles"></span>
+          </div>
+          <div class="tool-tag magic-btn">
             <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#D4785A"/><text x="50" y="68" text-anchor="middle" font-size="42" font-weight="700" fill="white" font-family="sans-serif">AI</text></svg>
             Claude IA<span class="tooltip">Assistant IA pour analyse, rédaction et stratégie produit</span><span class="sparkles"></span>
           </div>
@@ -1310,7 +1370,8 @@
           <div class="soft-word" data-emoji="🚀">Initiative</div>
           <div class="soft-word" data-emoji="💬">Communication</div>
           <div class="soft-word" data-emoji="🌿">Adaptabilité</div>
-          <div class="soft-word" data-emoji="🎭">Histoire et Culture</div>
+          <div class="soft-word" data-emoji="🎨">Histoire de l'art</div>
+          <div class="soft-word" data-emoji="🍽️">Cuisine du monde</div>
         </div>
       </div>
 
@@ -1319,14 +1380,21 @@
 
   <!-- FOOTER -->
   <div class="bottom-band">
-    <div class="band-left"><span>Fatima Charef</span></div>
+    <div class="band-left">
+      <span>Fatima Charef</span>
+    </div>
     <div class="band-center">
-      <a class="band-item" href="https://f-charef-projet.com/" target="_blank">🌐 f-charef-projet.com</a>
-      <a class="band-item" href="https://www.linkedin.com/in/fatima-charef/" target="_blank">in linkedin.com/in/fatima-charef</a>
+      <a class="chip" href="https://f-charef-projet.com/" target="_blank">
+        <span class="chip-icon">🌐</span> f-charef-projet.com
+      </a>
+      <a class="chip chip-linkedin" href="https://www.linkedin.com/in/fatima-charef/" target="_blank">
+        <span class="chip-in">in</span>
+        <span class="chip-text"> linkedin.com/in/fatima-charef</span>
+      </a>
     </div>
     <div class="band-avail">
       <div class="avail-light"></div>
-      Disponible
+      <span class="avail-text">Disponible</span>
     </div>
   </div>
 
@@ -1341,7 +1409,7 @@
   const musicBtn = document.getElementById('musicBtn');
   const welcomeScreen = document.getElementById('welcomeScreen');
   const welcomeBtn = document.getElementById('welcomeBtn');
-  bgMusic.volume = 0.18;
+  bgMusic.volume = 0.06;
 
   welcomeBtn.addEventListener('click', () => {
     // Démarre la musique
@@ -1432,13 +1500,10 @@
     els.forEach(el => io.observe(el));
   }
 
-  document.querySelectorAll('.col-left .glass-card').forEach((el, i) => {
-    el.classList.add('reveal-left');
-    el.style.transitionDelay = (i * 0.12) + 's';
-  });
-  document.querySelectorAll('.col-right .glass-card').forEach((el, i) => {
-    el.classList.add('reveal-right');
-    el.style.transitionDelay = (i * 0.12) + 's';
+  // Cards — alternance gauche / droite sur toutes les sections
+  document.querySelectorAll('.glass-card').forEach((el, i) => {
+    el.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');
+    el.style.transitionDelay = (i * 0.08) + 's';
   });
   observe(document.querySelectorAll('.reveal-left, .reveal-right'), el => el.classList.add('in'));
 
