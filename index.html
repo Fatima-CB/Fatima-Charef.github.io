@@ -403,7 +403,7 @@
   }
   .form-marker svg { width: 14px; height: 14px; }
   .form-item:hover .form-marker {
-    transform: scale(1.18) rotate(-8deg);
+    transform: scale(1.2);
     box-shadow: 0 4px 14px rgba(201,104,90,0.35);
   }
 
@@ -818,6 +818,49 @@
     opacity: 1 !important;
     transform: translateX(0) !important;
   }
+
+  /* ── CENTRES D'INTÉRÊT ── */
+  .interests-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .interest-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: white; border: 1px solid rgba(44,37,32,0.06);
+    border-radius: 12px; padding: 16px;
+    transition: all 0.35s ease; cursor: default;
+  }
+  .interest-item:hover {
+    background: var(--blush); border-color: rgba(201,104,90,0.2);
+    transform: translateY(-3px); box-shadow: 0 6px 18px rgba(201,104,90,0.12);
+  }
+  .interest-icon {
+    font-size: 26px; flex-shrink: 0;
+    animation: iconFloat 3s ease-in-out infinite;
+    animation-delay: var(--icon-delay, 0s);
+  }
+  @keyframes iconFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    30%      { transform: translateY(-4px) rotate(-5deg); }
+    60%      { transform: translateY(2px) rotate(3deg); }
+  }
+  .interest-item:hover .interest-icon {
+    animation: iconBounce 0.5s cubic-bezier(0.34,1.7,0.64,1);
+  }
+  @keyframes iconBounce {
+    0%   { transform: scale(1) rotate(0); }
+    40%  { transform: scale(1.4) rotate(-10deg); }
+    70%  { transform: scale(0.95) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .interest-label {
+    font-family: var(--font); font-size: 13px; font-weight: 600;
+    color: var(--warm); margin-bottom: 4px; transition: color 0.3s;
+  }
+  .interest-desc {
+    font-family: var(--font); font-size: 11px; line-height: 1.6;
+    color: var(--mid); font-weight: 300;
+  }
+  .interest-item:hover .interest-label { color: var(--accent1); }
 
   .tool-group-label {
     font-family: var(--font); font-size: 10px; font-weight: 600;
@@ -1370,8 +1413,51 @@
           <div class="soft-word" data-emoji="🚀">Initiative</div>
           <div class="soft-word" data-emoji="💬">Communication</div>
           <div class="soft-word" data-emoji="🌿">Adaptabilité</div>
-          <div class="soft-word" data-emoji="🎨">Histoire de l'art</div>
-          <div class="soft-word" data-emoji="🍽️">Cuisine du monde</div>
+        </div>
+      </div>
+
+      <!-- CENTRES D'INTÉRÊT -->
+      <div class="glass-card">
+        <div class="sec-title">
+          <div class="dot-color" style="background:var(--accent1)"></div>
+          Centres d'intérêt
+        </div>
+        <div class="interests-grid">
+          <div class="interest-item">
+            <div class="interest-icon">🎨</div>
+            <div>
+              <div class="interest-label">Histoire de l'art</div>
+              <div class="interest-desc">Passionnée par l'art à travers les époques, de la Renaissance aux mouvements contemporains.</div>
+            </div>
+          </div>
+          <div class="interest-item">
+            <div class="interest-icon">🍽️</div>
+            <div>
+              <div class="interest-label">Cuisine du monde</div>
+              <div class="interest-desc">Explorer les saveurs et traditions culinaires de différentes cultures.</div>
+            </div>
+          </div>
+          <div class="interest-item">
+            <div class="interest-icon">🚶‍♀️</div>
+            <div>
+              <div class="interest-label">Marche en solo</div>
+              <div class="interest-desc">Moments de ressourcement et de réflexion en pleine nature, seule avec mes pensées.</div>
+            </div>
+          </div>
+          <div class="interest-item">
+            <div class="interest-icon">🧘</div>
+            <div>
+              <div class="interest-label">Yoga</div>
+              <div class="interest-desc">Pratique régulière pour l'équilibre mental et physique au quotidien.</div>
+            </div>
+          </div>
+          <div class="interest-item" style="grid-column: span 2;">
+            <div class="interest-icon">🏛️</div>
+            <div>
+              <div class="interest-label">Histoire antique grecque et romaine</div>
+              <div class="interest-desc">Fascinée par les civilisations grecque et romaine, leur philosophie, leur architecture et leur influence sur notre monde moderne.</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1409,7 +1495,7 @@
   const musicBtn = document.getElementById('musicBtn');
   const welcomeScreen = document.getElementById('welcomeScreen');
   const welcomeBtn = document.getElementById('welcomeBtn');
-  bgMusic.volume = 0.06;
+  bgMusic.volume = 0.04;
 
   welcomeBtn.addEventListener('click', () => {
     // Démarre la musique
@@ -1542,6 +1628,11 @@
     document.querySelectorAll('.skill-row').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; });
     document.querySelectorAll('.skill-fill2').forEach(f => f.style.width = f.dataset.w);
   }, 900);
+
+  // ── INTEREST ICONS stagger ──
+  document.querySelectorAll('.interest-icon').forEach((el, i) => {
+    el.style.setProperty('--icon-delay', (i * 0.4) + 's');
+  });
 
   // ── SOFT SKILL EMOJI ──
   document.querySelectorAll('.soft-word[data-emoji]').forEach(el => {
